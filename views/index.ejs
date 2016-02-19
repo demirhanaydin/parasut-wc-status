@@ -2,16 +2,51 @@
 <html>
 <head>
   <title>Wc Status for Parasut</title>
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
   <style type="text/css">
-    h1 {
-      font: 12em Georgia, serif;
+    body, html {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
       text-align: center;
+      background-color: #ccccdd;
+    }
+    #bg {
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+    #bg.bg-loaded {
+      opacity: 0.5;
+    }
+    .busy {
+      background-color: #e74c3c;
+    }
+    .available {
+      background-color: #2ecc71;
+    }
+    h1 {
+      position: relative;
+      z-index: 2;
+      margin: 0;
+      font-family: Georgia;
+      font-size: calc( 8vw + 8vh );
+      line-height: 100vh;
+      color: white; 
     }
   </style>
 </head>
 <body>
-<p><h1 id='status' style="color:<%= wcStatus === 'available' ? 'green' : 'red' %>"><%= wcStatus %></h1></p>
+<div id="bg"></div>
+<h1 id='status'><%= wcStatus %></h1>
 
 <script type="text/javascript">
   var socket = io(window.location.hostname + ":" + window.location.port );
@@ -19,12 +54,40 @@
   socket.on('status', function(data) {
     el = document.getElementById('status');
     el.innerText = data;
-    if(data === 'available') {
-      el.style.color = 'green';
-    } else {
-      el.style.color = 'red';
-    }
-  })
+    updateBg(data);
+  });
+
+  $(document).ready(function() {
+    // add initial status
+    updateBg('<%= wcStatus %>');
+  });
+
+  function updateBg(data) {
+    $('body').attr('class', data);
+    getPattern($('#bg'));
+  }
+
+  function getPattern(obj) {
+    baseURL = 'http://www.colourlovers.com/api/patterns/random';
+    paramString = '?format=json&jsonCallback=?';
+    $.ajax({
+      url: baseURL + paramString,
+      dataType: 'jsonp',
+      success: function(data) {
+        // console.log('data success');
+        var image = new Image();
+        image.onload = function () {
+          // console.info("Image loaded !");
+          obj.addClass('bg-loaded');
+        }
+        image.onerror = function () {
+          // console.error("Cannot load image");
+        }
+        image.src = data[0].imageUrl;
+        obj.css('background','url(\'' + data[0].imageUrl + '\')');
+      }
+    });
+  }
 </script>
 </body>
 </html>

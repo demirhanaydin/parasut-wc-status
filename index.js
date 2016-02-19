@@ -20,7 +20,6 @@ spark.login({accessToken: process.env.PARTICLE_ACCESS_TOKEN});
 
 var publishChanges = function(data) {
   wcStatus = data.data;
-  console.log(wcStatus);
   io.sockets.emit('status', wcStatus);
 }
 

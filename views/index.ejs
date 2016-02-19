@@ -33,19 +33,68 @@
     .available {
       background-color: #2ecc71;
     }
+    .icon-busy, 
+    .icon-available {
+      position: relative;
+      z-index: 2;
+      display: none;
+    }
+    .icon-busy svg, .icon-available svg {
+      margin-top: 25vh;
+      margin-bottom: 5vh;
+      height: 40vh;
+    }
+    .available .icon-available,
+    .busy .icon-busy {
+      display: block;
+    }
     h1 {
       position: relative;
       z-index: 2;
       margin: 0;
       font-family: Georgia;
-      font-size: calc( 8vw + 8vh );
-      line-height: 100vh;
+      font-size: 4em;
       color: white; 
     }
   </style>
 </head>
 <body>
 <div id="bg"></div>
+
+<!-- SVG 'available' icon -->
+<div class="icon-available">
+  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     viewBox="0 0 50 100" style="enable-background:new 0 0 50 100;" xml:space="preserve">
+  <style type="text/css">
+    .st0{fill:#FFFFFF;}
+  </style>
+  <path class="st0" d="M24.8,15.9c4.7,0,8-3.3,8-7.9c0-4.5-3.3-8.1-8-8.1C20.3,0,17,3.5,17,8.1C17,12.6,20.3,15.9,24.8,15.9L24.8,15.9
+    z"/>
+  <path class="st0" d="M43.8,27.5c-0.4-5.3-4.3-9.1-9.8-9.1H15.6c-5.7,0-9.3,4-9.6,9.1h0v22.9c0,2.4,1.9,4.3,4.3,4.3s4.3-1.9,4.3-4.3
+    h0V27.5h1.9v23.3c0,2-1.1,3.8-2.7,4.8V57v37.9c0,2.9,2.4,5.1,5.1,5.1c2.9,0,5.1-2.2,5.1-5.1V57h1.7v37.9c0,2.9,2.2,5.1,5.1,5.1
+    c2.7,0,5.1-2.2,5.1-5.1V57v-1.3c-1.6-1.1-2.7-2.8-2.7-4.8V27.5h1.9v22.9c0,2.4,1.9,4.3,4.3,4.3c2.4,0,4.3-1.9,4.3-4.3h0L43.8,27.5
+    L43.8,27.5z"/>
+  </svg>
+</div>
+
+<!-- SVG 'busy' icon -->
+<div class="icon-busy">
+  <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+viewBox="0 0 50 100" style="enable-background:new 0 0 50 100;" xml:space="preserve">
+  <style type="text/css">
+    .st0{fill:#FFFFFF;}
+  </style>
+  <path class="st0" d="M24.9,15.9c4.7,0,8-3.3,8-7.9c0-4.5-3.3-8.1-8-8.1c-4.5,0-7.9,3.5-7.9,8.1C17.1,12.6,20.4,15.9,24.9,15.9
+    L24.9,15.9z"/>
+  <path class="st0" d="M31.2,71.9l4.1-15.1v-5.7c-1.4,3.7-3.9,4.9-6.1,4.9c-2,0-3.1-0.7-4.3-1.7c-1,1-2.6,1.8-4.3,1.8
+    c-2.4,0-4.6-1-6.1-5.1v44c0,2.9,2.4,5.1,5.1,5.1c2.9,0,5.1-2.2,5.1-5.1v-2.9l-5.1-20l4.1-15.1h1.8l-4.1,15.1l7.1,28.1
+    c5.7,0,7.7-2.6,7.7-6.4c0-1.1-0.2-2.2-0.5-3.4L31.2,71.9z"/>
+  <path class="st0" d="M44,28.3c0-5.7-4.1-9.8-9.8-9.8H15.7c-6,0-9.6,4.4-9.6,9.8c0,1.6,0.2,2.9,0.8,4.1l9.8,19.3
+    c0.9,1.7,2.2,2.7,3.9,2.7c1.4,0,2.5-0.6,3.3-1.6c-0.4-0.8-0.7-1.8-0.7-2.7c0-1,0.3-2.2,0.7-2.9l-8.9-17.6h2l7.9,15.7l8-15.7h2
+    l-9.4,18.5c-0.4,0.7-0.6,1.4-0.6,2.2c0,2.2,1.8,3.9,4.3,3.9c2,0,3-0.7,4-2.6l9.6-18.8C43.5,31.4,44,29.9,44,28.3L44,28.3z"/>
+  </svg>
+</div>
+
 <h1 id='status'><%= wcStatus %></h1>
 
 <script type="text/javascript">

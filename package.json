@@ -1,0 +1,17 @@
+{
+  "name": "wc-status",
+  "version": "0.0.1",
+  "description": "wc status for parasut",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Demirhan Aydin",
+  "license": "ISC",
+  "dependencies": {
+    "spark": "latest",
+    "express": "latest",
+    "socket.io": "latest",
+    "ejs": "latest"
+  }
+}

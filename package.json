@@ -13,6 +13,7 @@
     "express": "latest",
     "socket.io": "latest",
     "ejs": "latest",
-    "http": "latest"
+    "http": "latest",
+    "colourlovers": "latest"
   }
 }

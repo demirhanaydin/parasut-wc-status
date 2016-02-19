@@ -2,7 +2,8 @@
 <html>
 <head>
   <title>Wc Status for Parasut</title>
-  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
   <script>
@@ -107,39 +108,34 @@ viewBox="0 0 50 100" style="enable-background:new 0 0 50 100;" xml:space="preser
   socket.on('status', function(data) {
     el = document.getElementById('status');
     el.innerText = data;
+    $('.icon-busy, .icon-available').toggle();
+  });
+
+  socket.on('bg', function(data) {
     updateBg(data);
   });
 
   $(document).ready(function() {
-    // add initial status
-    updateBg('<%= wcStatus %>');
+    updateBg('<%= initialBg %>');
+    var status = '<%= wcStatus %>'
+    if(status === 'available') {
+      $('.icon-available').show();
+    } else {
+      $('.icon-busy').show();
+    }
   });
 
   function updateBg(data) {
-    $('body').attr('class', data);
-    getPattern($('#bg'));
-  }
-
-  function getPattern(obj) {
-    baseURL = 'http://www.colourlovers.com/api/patterns/random';
-    paramString = '?format=json&jsonCallback=?';
-    $.ajax({
-      url: baseURL + paramString,
-      dataType: 'jsonp',
-      success: function(data) {
-        // console.log('data success');
-        var image = new Image();
-        image.onload = function () {
-          // console.info("Image loaded !");
-          obj.addClass('bg-loaded');
-        }
-        image.onerror = function () {
-          // console.error("Cannot load image");
-        }
-        image.src = data[0].imageUrl;
-        obj.css('background','url(\'' + data[0].imageUrl + '\')');
-      }
-    });
+    var image = new Image();
+    image.onload = function () {
+      // console.info("Image loaded !");
+      $('#bg').addClass('bg-loaded');
+    }
+    image.onerror = function () {
+      // console.error("Cannot load image");
+    }
+    image.src = data;
+    $('#bg').css('background','url(\'' + data + '\')');
   }
 </script>
 </body>

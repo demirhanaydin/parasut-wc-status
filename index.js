@@ -4,7 +4,9 @@ var spark      = require('spark'),
     server     = require('http').createServer(app),
     io         = require('socket.io')(server),
     port       = (process.env.PORT || 8000),
-    wcStatus   = 'initializing...';
+    wcStatus   = 'initializing...',
+    COLOURlovers = require('colourlovers'),
+    initialBg;
 
 app.set('port', port);
 // view engine setup
@@ -21,6 +23,15 @@ spark.login({accessToken: process.env.PARTICLE_ACCESS_TOKEN});
 var publishChanges = function(data) {
   wcStatus = data.data;
   io.sockets.emit('status', wcStatus);
+  publishBackground();
+}
+
+var publishBackground = function() {
+  COLOURlovers.get('/patterns/random', function(err, data) {
+    if(err) throw err;
+    io.sockets.emit('bg', data[0].imageUrl);
+    initialBg = data[0].imageUrl;
+  })
 }
 
 spark.getDevice('frodo', function(err, device) {
@@ -31,8 +42,11 @@ spark.getDevice('frodo', function(err, device) {
 });
 
 app.get('/', function(req, res) {
-  res.render('index', {
-    wcStatus: wcStatus
+  Promise.resolve(publishBackground()).then(function() {
+    res.render('index', {
+      wcStatus: wcStatus,
+      initialBg: initialBg
+    });
   });
 });
 

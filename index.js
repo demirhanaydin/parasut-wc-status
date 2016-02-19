@@ -1,10 +1,12 @@
 var spark      = require('spark'),
     express    = require('express'),
     app        = express(),
-    io         = require('socket.io').listen('8500'),
+    server     = require('http').createServer(app),
+    io         = require('socket.io')(server),
+    port       = (process.env.PORT || 8000),
     wcStatus   = 'initializing...';
 
-app.set('port', (process.env.PORT || 8000));
+app.set('port', port);
 // view engine setup
 app.set('view engine', 'ejs'); //tell the template engine
 
@@ -35,4 +37,4 @@ app.get('/', function(req, res) {
   });
 });
 
-app.listen(app.get('port'));
+server.listen(app.get('port'));

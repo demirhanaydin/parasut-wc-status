@@ -14,7 +14,7 @@
 <p><h1 id='status' style="color:<%= wcStatus === 'available' ? 'green' : 'red' %>"><%= wcStatus %></h1></p>
 
 <script type="text/javascript">
-  var socket = io(window.location.hostname + ":8500");
+  var socket = io(window.location.hostname + ":" + window.location.port );
 
   socket.on('status', function(data) {
     el = document.getElementById('status');

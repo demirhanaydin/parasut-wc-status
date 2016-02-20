@@ -20,7 +20,8 @@ spark.on('login', function(err, body) {
 
 spark.login({accessToken: process.env.PARTICLE_ACCESS_TOKEN});
 
-var publishChanges = function(wcStatus) {
+var publishChanges = function(data) {
+  wcStatus = data;
   io.sockets.emit('status', wcStatus);
   publishBackground();
 }
@@ -40,7 +41,6 @@ spark.getDevice('frodo', function(err, device) {
       console.log('An error occurred while getting attrs:', err);
     } else {
       console.log('Device attr retrieved successfully:', data.result);
-      wcStatus = data.result;
       publishChanges(data.result);
     }
   });
@@ -58,5 +58,11 @@ app.get('/', function(req, res) {
     });
   });
 });
+
+app.get('/status', function(req, res) {
+  res.send({
+    status: wcStatus
+  });
+})
 
 server.listen(app.get('port'));

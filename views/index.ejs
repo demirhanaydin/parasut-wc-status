@@ -121,9 +121,11 @@ viewBox="0 0 50 100" style="enable-background:new 0 0 50 100;" xml:space="preser
     uploadStatus(status);
     updateBg('<%= initialBg %>');
     if(status === 'available') {
-      $('.icon-available').show();
+      $('.icon-available').toggle(true);
+      $('.icon-busy').toggle(false);
     } else {
-      $('.icon-busy').show();
+      $('.icon-available').toggle(false);
+      $('.icon-busy').toggle(true);
     }
   });
 

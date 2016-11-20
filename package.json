@@ -1,6 +1,9 @@
 {
   "name": "wc-status",
-  "version": "0.0.1",
+  "version": "1.0.0-beta",
+  "engines": {
+    "node": "6.3.1"
+  },
   "description": "wc status app w/ react",
   "main": "index.js",
   "scripts": {

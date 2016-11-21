@@ -52,5 +52,15 @@ app.use(express.static('public'));
 app.get('/toilets', function(req, res) {
   res.send(toilets.map(function(toilet){ return toilet.detail() }) );
 });
+// deprecated endpoint, support till end of mac app
+app.get('/status', function(req, res) {
+  let status;
+  toilets.forEach(function(toilet) {
+    if (toilet.name == 'frodo'){
+      status = toilet.status;
+    }
+  })
+  res.send({ status: status });
+})
 
 server.listen(app.get('port'));
